@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.itmentor.spring.boot_security.demo.models.User;
-import ru.itmentor.spring.boot_security.demo.services.RegistrationService;
 import ru.itmentor.spring.boot_security.demo.services.RoleServices;
 import ru.itmentor.spring.boot_security.demo.services.UserServices;
 import ru.itmentor.spring.boot_security.demo.util.UserValidator;
@@ -18,14 +17,12 @@ import ru.itmentor.spring.boot_security.demo.util.UserValidator;
 @RequestMapping("/admin")
 public class AdminController {
     private final UserServices userServices;
-    private final RegistrationService registrationService;
     private final UserValidator userValidator;
     private final RoleServices roleServices;
 
     @Autowired
-    public AdminController(UserServices userServices, RegistrationService registrationService, UserValidator userValidator, RoleServices roleServices) {
+    public AdminController(UserServices userServices, UserValidator userValidator, RoleServices roleServices) {
         this.userServices = userServices;
-        this.registrationService = registrationService;
         this.userValidator = userValidator;
         this.roleServices = roleServices;
     }
@@ -56,7 +53,7 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
             return "admin/add";
         }
-        registrationService.register(user);
+        userServices.register(user);
         return "redirect:/admin";
     }
 

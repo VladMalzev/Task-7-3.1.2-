@@ -19,6 +19,7 @@ public class UserServicesImpl implements UserServices {
     private final UserRepositories userRepositories;
     private final PasswordEncoder passwordEncoder;
 
+
     @Autowired
     public UserServicesImpl(UserRepositories userRepositories, PasswordEncoder passwordEncoder){
         this.userRepositories=userRepositories;
@@ -56,6 +57,12 @@ public class UserServicesImpl implements UserServices {
     @Override
     public void update(User user, Long id) {
         user.setId(id);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepositories.save(user);
+    }
+    @Transactional
+    @Override
+    public void register(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepositories.save(user);
     }

@@ -18,4 +18,6 @@ public interface UserServices extends UserDetailsService {
     void delete(Long id);
 
     void update(User user, Long id);
+
+    void register(User User);
 }
